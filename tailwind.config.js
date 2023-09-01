@@ -11,6 +11,7 @@ module.exports = {
     './components/**/*.{js,ts,tsx}',
     './layouts/**/*.{js,ts,tsx}',
     './data/**/*.mdx',
+    './lib/**/*.{js,ts}',
   ],
   darkMode: 'class',
   theme: {
@@ -22,10 +23,10 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['var(--font-space-grotesk)', ...fontFamily.sans],
+        sans: ['InterVariable', ...fontFamily.sans],
       },
       colors: {
-        primary: colors.pink,
+        primary: colors.violet,
         gray: colors.gray,
       },
       typography: ({ theme }) => ({
@@ -36,7 +37,7 @@ module.exports = {
               '&:hover': {
                 color: `${theme('colors.primary.600')}`,
               },
-              code: { color: theme('colors.primary.400') },
+              code: { color: theme('colors.primary.700') },
             },
             'h1,h2': {
               fontWeight: '700',
@@ -46,7 +47,7 @@ module.exports = {
               fontWeight: '600',
             },
             code: {
-              color: theme('colors.indigo.500'),
+              code: { color: theme('colors.primary.700') },
             },
           },
         },

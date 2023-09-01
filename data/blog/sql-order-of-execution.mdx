@@ -1,0 +1,59 @@
+---
+title: "SQL's Order of Execution"
+date: '2020-12-16'
+tags: ['sql']
+draft: false
+summary: 'Details on how SQL optimizes database queries'
+---
+
+If you started learning SQL after having learned a language like Java or Python, it takes getting used to different concepts inherent in database querying, let alone the varied differences in the way SQL runs. Once you've started writing anything more complicated than the “Hello, World!” of SQL queries, meaning `SELECT * FROM TABLE;`, then you've probably encountered errors that hint at one of the more unintuitive aspects of the language: the order of execution in a SQL statement.
+
+As an example, say we're creating a derived column and then we want to group the results by that new column. In this code example we'll create a new column summing the value of multiple customer contracts from a hypothetical database:
+
+```sql
+SELECT
+    customer_id,
+    contract_1,
+    contract_2,
+    contract_3,
+    SUM(contract_1, contract_2, contract_3) AS contract_totals
+  FROM contract_table;
+```
+
+In the case where you want to order by the size of the contract totals, you would likely encounter an error stating that the column `contract_totals` does not exist:
+
+```sql
+SELECT
+    customer_id,
+    contract_1,
+    contract_2,
+    contract_3,
+    SUM(contract_1, contract_2, contract_3) AS contract_totals
+  FROM contract_table
+  ORDER BY contract_totals;
+```
+
+It turns out that standard SQL runtimes will attempt to run a “group by” statement before the “select” statement, and in fact the “select” statement is one of the last parts of a SQL query that gets executed. The following is the order that a typical SQL statement is executed in with a brief description of that command:
+
+1. `FROM`: pick the table(s) to be queried
+2. `WHERE`: filter the rows
+3. `GROUP BY`: aggregate the rows
+4. `HAVING`: filter the aggregated rows
+5. `SELECT`: select the columns that appear in the output
+6. `ORDER BY`: sort rows by value(s)
+7. `LIMIT`: restrict the maximum number of returned rows
+
+Unfortunately there's not a great way to work around this process and your best bet is to have this order of execution memorized. For instance, returning to our previous example with the contract amount summation, it's easiest to repeat the sum expression within the `ORDER BY` statement:
+
+```sql
+SELECT
+    customer_id,
+    contract_1,
+    contract_2,
+    contract_3,
+    SUM(contract_1, contract_2, contract_3) AS contract_totals
+  FROM contract_table
+  ORDER BY sum(contract_1, contract_2, contract_3);
+```
+
+Even though this should set off every programmer's DRY alarm (DRY=“don't repeat yourself”), writing your SQL queries with the execution order in mind will reduce the number of errors you encounter, especially as you transition from a SQL newbie to a seasoned user!

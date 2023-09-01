@@ -1,0 +1,51 @@
+---
+title: 'How Big Are the Prime Numbers Used in Cryptography?'
+date: '2023-08-22'
+tags: ['cryptography', 'mathematics', 'number theory']
+draft: false
+summary: 'A look at the size and characteristics of cryptographic primes'
+---
+
+During the height of the pandemic when I was between jobs, I attended a webinar on cryptography principles given by a security engineer. While the speaker was detailing how public-private key cryptography works, she described the primes used to create these keys as “very big”. When I raised my Zoom hand to ask if she could describe how big these primes are, the speaker said something like “several hundred digits.” I've thought about that answer off-and-on since then, and recently resolved to find a more concrete answer. I'll first answer the question directly and then explore a few natural followup questions including why they are the size they are, how these numbers are found, and exactly how many of these primes there are available to use in modern cryptography.
+
+The short answer is that the exact size depends on the cryptographic algorithm being used, but the general [best practice as of 2023](https://weakdh.org/) is to use a 2048-bit prime number for methods like the Diffie-Hellman key exchange algorithm. To give a visual representation of that, here is a (approximately) 2048-bit number derived using Python's cryptographic [`getPrime`](https://pycryptodome.readthedocs.io/en/latest/src/util/util.html#Crypto.Util.number.getPrime) method:
+
+<LargePrime />
+
+This number is 617 digits long. That length is based on the fact that we've converted a 2048-bit binary number (“bit” is short for “binary digit”) to a decimal (base 10) digit. To get from a value of 2,048 binary digits, we will have at most $kn$ decimal digits, where $k = log_{10} 2$, or about 0.301, and $n$ is the number of binary digits. Thus, 2048 times 0.301 rounded up to the nearest whole integer gives us 617.
+
+## How do we find these numbers?
+
+It might seem intuitive that these numbers would be picked out of a list. After all, having to “find” a new large prime number every time a cryptographic process is established seems like a lot of work… but that's exactly what happens! The general approach is to generate an odd random number of the appropriate size (617 digits for a base-10 number in the case above), and then run some tests to see if it's a prime number.
+
+The first of these tests is to divide that number by a list of the first few hundred prime numbers. If any of those “small” primes can evenly divide the randomly-generated candidate number, then we know it's a composite number (a number with multiple factors besides itself and 1), not a prime, and the entire process restarts with a new, randomly-generated number. If the candidate number cannot be evenly divided by any of these smaller primes, we move onto a second, more complicated and probabilistic test that doesn't tell us with 100% certainty that a number is a large prime, but can get us within an acceptable level of confidence that we have found a large prime number. In practice it's usually acceptable to find a number that is _probably_ prime because it would still be difficult to find factors for such a large number, and because most modern cryptographic processes that use these large numbers will find new numbers after some brief amount of time, usually on the order of a few minutes to several hours.
+
+For the second test to determine if our candidate is highly likely to be prime, there are [several tests](https://en.wikipedia.org/wiki/List_of_number_theory_topics#Primality_tests) available. These tests rely heavily on [modular arithmetic](https://en.wikipedia.org/wiki/Modular_arithmetic) and properties such as [congruence](https://en.wikipedia.org/wiki/Congruence_relation), in which more than one number have the same remainder when divided by a particular integer. The [Miller-Rabin Test](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test) is the most widely used of these tests, and it works by selecting a random number between 2 and 1 minus our candidate prime, and then checking if that number is a divisor of our candidate number by running through one or more calculations of congruence relations. It does these checks in a relatively fast manner and to a high degree of certainty compared to other primality tests, hence its popularity in modern cryptographic protocols. The details of the test's calculations are beyond the scope of this post, but I have some links to more detailed resources below.
+
+To describe our algorithm for finding large prime numbers from a high level, here's what steps we take:
+
+1. Pick a random number of appropriate size (often 2048 bits)
+2. Test for primeness using a low-level primality test (i.e., divide by list of smaller primes)
+3. Test for primeness using a high-level primality test such as the Miller-Rabin Test
+
+## How many of these prime numbers exist?
+
+In the last section on finding a large prime we wondered whether we could pull these numbers from a pre-existing list to save us the trouble of finding a new number every time we need one. A natural followup question might be to ask how many of these large prime numbers exist. After all, what if someone has a large enough computer to store a list of these numbers to check against? That would effectively nullify this entire process!
+
+Fortunately for modern cryptography and all of the technologies that rely on it, it is physically impossible to store all of these large, 2048-bit prime numbers. Thanks to the [prime number theorem](https://en.wikipedia.org/wiki/Prime_number_theorem), we can roughly (but still quantitatively) determine the distribution of prime numbers amongst a range of all integers using the formula $π(N) \sim \frac{N}{ln(N)}$, which also gives us the count of prime numbers up to the number $N$ using the [prime-counting function](https://en.wikipedia.org/wiki/Prime-counting_function) $π(N)$. Using it to find the number of primes of exactly 2048 bits, let alone primes of other sizes, gives us more than $10^{600}$. This is significantly greater than the estimate for the number of atoms in the known universe, which is currently around $10^{80}$, and hence storing all of these numbers would be against the laws of physics. Such a gigantic amount of possible prime numbers also makes collisions (i.e., creating the same prime number more than once) effectively impossible. Finding one specific prime to break a cryptographic protocol such as the RSA algorithm is hopeless for even the most powerful supercomputers, even if the protocols that use these prime numbers weren't switching to new large primes every few minutes or hours.
+
+## Summary
+
+Hopefully now we have a basic understanding of why prime numbers used in modern cryptographic protocols are the size they are, how we derive and test those prime numbers, and a sense for how many of these numbers there are available. An even more basic question might be to ask what makes prime numbers so special to use in cryptography in the first place. But that will have to be the subject of a future post. Stay tuned!
+
+## Additional Links
+
+[Cryptographic Key Length Recommendations](https://www.keylength.com/)
+
+Cryptography Stack Exchange: [How can I generate large prime numbers for RSA?](https://crypto.stackexchange.com/questions/71/how-can-i-generate-large-prime-numbers-for-rsa)
+
+Medium: [Finding Large Primes for Public Key Cryptography - The Miller-Rabin primality test](https://ghenshaw-work.medium.com/finding-large-primes-for-public-key-cryptography-9c5a5c0d32c4)
+
+Paper: [Is there a shortage of primes for cryptography?](https://homes.cerias.purdue.edu/~ssw/shortage.pdf)
+
+[How Many Primes Are There?](https://t5k.org/howmany.html) - Good description of the Prime Number Theorem
