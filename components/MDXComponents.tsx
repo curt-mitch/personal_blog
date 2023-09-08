@@ -12,5 +12,5 @@ export const components: MDXComponents = {
   a: CustomLink,
   pre: Pre,
   BlogNewsletterForm,
-  LargePrime
+  LargePrime,
 }
