@@ -1,4 +1,4 @@
-const ProjectsData = [
+const ExternalWorkData = [
   {
     title: 'Announcing the 2023 xD Emerging Technology Fellows',
     description: `This is a news piece on the xD website presenting my cohort of emerging technology fellows.`,
@@ -25,4 +25,4 @@ const ProjectsData = [
   },
 ]
 
-export default ProjectsData
+export default ExternalWorkData

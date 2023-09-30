@@ -154,7 +154,7 @@ Edit the layout in `app` or content in `data`. With live reloading, the pages au
 
 `data/authors/default.md` - default author information (required). Additional authors can be added as files in `data/authors`.
 
-`data/projectsData.js` - data used to generate styled card on the projects page.
+`data/projectsData.js` - data used to generate styled card on the projects page. (renamed to "external work")
 
 `data/headerNavLinks.js` - navigation links.
 
@@ -223,7 +223,7 @@ canonicalUrl: https://tailwind-nextjs-starter-blog.vercel.app/blog/introducing-t
 
 ## Deploy
 
-**Vercel**  
+**Vercel**
 The easiest way to deploy the template is to deploy on [Vercel](https://vercel.com). Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 **Netlify**
