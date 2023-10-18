@@ -13,8 +13,8 @@ export default function ExternalWork() {
             External Work
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            External links featuring various projects I've worked on as well as articles
-            I've written and talks I've presented.
+            External links featuring various projects I've worked on as well as articles I've
+            written and talks I've presented.
           </p>
         </div>
         <div className="container py-12">
