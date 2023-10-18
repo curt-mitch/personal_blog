@@ -1,5 +1,17 @@
 const ExternalWorkData = [
   {
+    title: 'Creating a Client-Side Model Card Generator',
+    description: `A technical blog post for the model card generator feature`,
+    imgSrc: '/static/images/creating-a-client-side-model-card-generator.jpg',
+    href: 'https://www.xd.gov/blog/creating-a-client-side-model-card-generator/',
+  },
+  {
+    title: 'Model Card Generator',
+    description: `A client-side generator for machine learning model cards.`,
+    imgSrc: '/static/images/model-card-generator-form.png',
+    href: 'https://bias.xd.gov/resources/model-card-generator/',
+  },
+  {
     title: 'Announcing the 2023 xD Emerging Technology Fellows',
     description: `This is a news piece on the xD website presenting my cohort of emerging technology fellows.`,
     imgSrc: '/static/images/announcing-the-2023-xd-emerging-technology-fellows.png',
