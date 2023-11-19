@@ -23,21 +23,22 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['InterVariable', ...fontFamily.sans],
+        sans: ['InterVariable', ...fontFamily.sans], // add Atkinson-hyperlegible font?
       },
       colors: {
-        primary: colors.violet,
+        primary: colors.indigo,
+        secondary: colors.violet,
         gray: colors.gray,
       },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
             a: {
-              color: theme('colors.primary.500'),
+              color: theme('colors.primary.800'),
               '&:hover': {
                 color: `${theme('colors.primary.600')}`,
               },
-              code: { color: theme('colors.primary.700') },
+              code: { color: theme('colors.primary.800') },
             },
             'h1,h2': {
               fontWeight: '700',
@@ -47,18 +48,18 @@ module.exports = {
               fontWeight: '600',
             },
             code: {
-              code: { color: theme('colors.primary.700') },
+              code: { color: theme('colors.primary.800') },
             },
           },
         },
         invert: {
           css: {
             a: {
-              color: theme('colors.primary.500'),
+              color: theme('colors.secondary.500'),
               '&:hover': {
-                color: `${theme('colors.primary.400')}`,
+                color: `${theme('colors.secondary.400')}`,
               },
-              code: { color: theme('colors.primary.400') },
+              code: { color: theme('colors.secondary.400') },
             },
             'h1,h2,h3,h4,h5,h6': {
               color: theme('colors.gray.100'),
