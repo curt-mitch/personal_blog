@@ -1,5 +1,11 @@
 const ExternalWorkData = [
   {
+    title: 'Awesome PETs',
+    description: `A curated list of resources for privacy-enhancing technologies`,
+    imgSrc: '/static/images/awesome-PETs.png',
+    href: 'https://github.com/curt-mitch/awesome-PETs',
+  },
+  {
     title: 'Creating a Client-Side Model Card Generator',
     description: `A technical blog post for the model card generator feature`,
     imgSrc: '/static/images/creating-a-client-side-model-card-generator.jpg',
