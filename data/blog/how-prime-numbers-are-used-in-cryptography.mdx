@@ -1,0 +1,24 @@
+---
+title: 'Why Are Prime Numbers Used in Cryptography?'
+date: '2023-10-22'
+tags: ['cryptography', 'mathematics', 'number theory']
+draft: true
+summary: 'An overview of how cryptographic processes use prime numbers'
+---
+
+In the last post on prime numbers in cryptography, we looked at the nature of the prime numbers themselves. In this post we'll look at _why_ and _how_ we use these large prime numbers. We'll do so by looking at what makes breaking modern encryption difficult, and an overview of the Diffie-Hellman key exchange for public-key cryptography.
+
+## Why do we use prime numbers?
+
+The short answer is that large prime numbers are used in cryptography because of an issue known as the “factoring problem”. Essentially this is the difficulty of factoring a large number when you don't know the factors of that number directly. As an example, let's say I have the primes 373 and 521. Multiplying these numbers gives us 194,333. If you didn't know that the factors for this number were two primes, you'd have to try dividing it by a long list of numbers before you found its factors! Even with two much smaller primes the problem can still be intimidating: 11 \* 23 is 253, but for most people it's not immediately obvious what the factors of 253 would be.
+
+You may be wondering why use prime numbers specifically and not any large, randomly generated number. Recall that prime numbers' special characteristic is that they're only divisible by themselves and 1. But using non-prime numbers in our cryptographic protocols, even very large numbers, increases the chance of someone finding a factor to our large number and potentially breaking our cryptography. Even though we limit the amount of large numbers we have available by only using primes, the tradeoff is worth it because of the reduced chance of an attacker finding a factor that evenly divides the large number we use.[^1]
+
+It might seem that if we could keep a list of all large numbers composed of two prime factors, then we could easily factor these numbers and break modern cryptographic protocols. But if you recall in the last post that I talked about the set of very large prime numbers available for modern cryptography being way too large for any system to store, even if that system includes every atom in the universe! It is therefore even more impossible to imagine we could ever store a list of every multiplicative combination of these numbers.
+
+## Additional Links
+
+<Base64ConverterComponent />
+<Base64Encryptor />
+
+[^1]: Some readers will remember that we actually generate numbers that are _probably_ (but not _definitely_) prime using algorithms such as the [Miller-Rabin Test](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test), so there's a chance that an attacker could find a non-prime factor. But recall that modern cryptographic protocols also rotate these keys every few minutes or hours, so while we have a high degree of certainty that these large numbers are prime, finding new probable-primes on a regular cadence acts as an insurance policy against accidentally finding non-prime factors.

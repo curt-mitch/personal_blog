@@ -5,6 +5,8 @@ import type { MDXComponents } from 'mdx/types'
 import Image from './Image'
 import CustomLink from './Link'
 import LargePrime from './LargePrime'
+import Base64ConverterComponent from './cryptography/Base64Converter'
+import Base64Encryptor from './cryptography/Base64Encryptor'
 
 export const components: MDXComponents = {
   Image,
@@ -13,4 +15,6 @@ export const components: MDXComponents = {
   pre: Pre,
   BlogNewsletterForm,
   LargePrime,
+  Base64ConverterComponent,
+  Base64Encryptor,
 }
