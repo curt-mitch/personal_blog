@@ -11,7 +11,7 @@ const siteMetadata = {
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/marvelous-balance-logo.png',
   // mastodon: 'https://mastodon.social/@mastodonuser',
-  email: 'curtis.l.mitchell@gmail.com',
+  email: 'curtis@curt-mitch.com',
   github: 'https://github.com/curt-mitch',
   // twitter: 'https://twitter.com/',
   // facebook: 'https://facebook.com',
