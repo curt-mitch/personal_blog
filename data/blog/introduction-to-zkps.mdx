@@ -1,0 +1,120 @@
+---
+title: 'An introduction to Zero-Knowledge Proofs'
+date: '2024-04-26'
+tags: ['zero-knowledge proofs', 'privacy-enhancing technologies']
+draft: true
+summary: 'An introduction to zero-knowledge proofs using the Feige-Fiat-Shamir identification scheme'
+---
+
+What if you wanted to prove that you know some piece of information without revealing that information directly? For example, what if you could verify that the amount of money in your bank account meets some threshold (say, for a credit check) without having to disclose the exact amount of money you have? This is the promise of zero-knowledge proofs (ZKPs), a class of privacy-enhancing technology (PETs) that allow someone to show they possess a piece of information without having to divulge that information directly.
+
+ZKPs are not a new idea, but they have experienced a recent growth in popularity, especially for applications in web3 and cryptocurrency domains. In this post I'll give a sense for how ZKPs work by walking through the process for one of the earliest examples of ZKPs, the [Feige-Fiat-Shamir identification scheme](https://en.wikipedia.org/wiki/Feige%E2%80%93Fiat%E2%80%93Shamir_identification_scheme).
+
+## An Introduction to the Cast
+
+Similar to cryptocurrencies, many of the ideas in ZKPs originated in crypography. Discussions of cryptographic protocols usually involve "Alice" and "Bob" to represent two people sharing information, and another person, "Eve", attempting to listen to their calls.
+For ZKP examples, instead of these three individuals we usually have the characters "Peggy" who is attempting to prove she knows a piece of information without revealing it directly (also known as the "Prover"), and "Vincent", who is attempting to verify Peggy's claim (also known as the "Verifier").
+
+## The Feige-Fiat-Shamir Identification scheme
+
+This scheme was originally introduced[^1] in 1988 by cryptographers []. The essense of the scheme is that Peggy will prove to Victor that she knows some collection of numbers without sharing those numbers directly. Victor will challenge Peggy by picking random zeros and ones, and then a series of modular and exponential arithmetic steps are worked through that can only be solved with Peggy's secret numbers. This series of steps can be repeated any number of times until Victor is satisfied Peggy does know her numbers (and that she hasn't, for example, selected them at random).
+
+Throughout this description we'll be using Python-based coding examples. The only extra dependency we'll need is SciPy for its useful `isprime` method.
+
+### Step 1: Generation of Random Primes and Peggy's Selection of Secret Values
+
+Throughout this example, we'll use numbers between 0 and 1000, much smaller numbers than are used in practice[^2], to make the process easier to reason about.
+
+```python
+# initializing prime list
+from sympy import isprime
+
+min_value = 1
+max_value = 1000
+small_primes = [i for i in range(min_value, max_value) if isprime(i)]
+```
+
+Now we select two random prime numbers from this list, `p` and `q`, and multiply them to create a third number `n = p * q`.
+
+Next, Peggy creates her secret numbers. These can be any amount of secret numbers, but for this we'll randomly select three that we'll call `s1`, `s2`, and `s3`. Importantly, for the arithmetic to work out these numbers must be coprime to `n` and they therefore cannot equal either `p` or `q`:
+
+```python
+s1, s2, s3 = random.choices([i for i in range(min_value, max_value) if i != p and i != q], k=3)
+```
+
+Lastly, Peggy also generates a random value `r` and computes a value `x` that "hides" the true value of `r` by squaring `r` and taking its modulous with `n`:
+
+```python
+r = random.randint(min_value, max_value)
+x = (r**2) % n
+```
+
+### Step 2: Victor Challenges Peggy
+
+For his part, Victor selects a random collection of 0's and 1's that we'll save as `a1`, `a2`, and `a3` meant to challenge Peggy's knowledge of the secret `s` values:
+
+```python
+a1, a2, a3 = random.choices([0, 1], k=3)
+```
+
+Victor then sends his challenge values to Peggy while she, in turn, sends him the value of `x`.
+
+Peggy calculates a new value `y` that involves the product of the secret `s` values raised to the power of Victor's `a` challenge values, which is also multiplied by `r` and modulated by `n`.
+
+```python
+y = (r * ((s1**a1) * (s2**a2) * (s3**a3)) ) % n
+```
+
+Peggy also computes values `v` that square the secret `s` values and modulate them with `n`:
+```python
+v1 = (s1**2) % n
+v2 = (s2**2) % n
+v3 = (s3**2) % n
+```
+
+The `v` values as well as `y` are then shared with Victor.
+
+Let's recap where we are at this point. Victor has a random selection of 0's and 1's that he shared with Peggy. Peggy has shared `x`, `y`, and the `v` and `a` values with Victor, but crucially she has not shared the secret values `s` nor the values `n` and `r`. In other words, Peggy has not shared the values she wants to prove she knows, but she has shared a number of values calculated with those secret numbers as well as Victor's challenge numbers, but all of the values Peggy has shared with Victor _are_ numbers that were computed from `n`, `r`, and the secret values.
+
+The next step is to prove that these computed values could only have been created if Peggy indeed knows the values of `s`.
+
+### Step 3: Peggy Proves her Knowledge of the Secret Values
+
+This step involves one more calculation. Victor confirms that the value `y` shared by Peggy is equal to the product of `x` and the values of `v` raised to the power of his `a` values, all modulo `n`:
+
+```python
+proof = (y**2 % n == (x * ( (v1**a1) * (v2**a2) * (v3**a3)) ) % n)
+print(proof) # True
+```
+
+### Mathematical Review
+
+Let's review the algebraic definitions and equalities that support this proof:
+
+1. By the definition of `y` our proof takes the form
+$$
+mod(y^2, n) = mod((r^2 * ({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_3}^{a_3}) )^2, n)
+$$
+
+2. By the definition of `x` we can replace squared `r` terms:
+$$
+mod(r^2 * (({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_3}^{a_3}) )^2, n) = mod(x * (({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_3}^{a_3}))^2, n)
+$$
+
+3. If we expand the squared terms, we get
+$$
+mod(x * (({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_3}^{a_3}))^2, n) = mod(x * ({s_1}^{a_1}) * ({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_2}^{a_2}) * ({s_3}^{a_3}) * ({s_3}^{a_3}), n)
+$$
+
+4. Then applying the definition of the `v` terms, we get
+$$
+mod(x * ({s_1}^{a_1}) * ({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_2}^{a_2}) * ({s_3}^{a_3}) * ({s_3}^{a_3}), n) = x * (({v_1}^{a_1}) * ({v_2}^{a_2}) * ({v_3}^{a_3}))
+$$
+
+These steps confirm that Peggy indeed knows the secret `s` values and can prove it without needing to directly reveal those values.
+
+There is a chance that Peggy could randomly generate a value for `y` such that the final step of the proof would be true without her actually knowing the secret values. The Feige-Fiat-Shamir Identification scheme proposes doing several rounds of verification using different values for `r` and Victor's `a` challenge values where each round would reduce the probability that Peggy is able to continually generate random values for `y` that also satisfy unknown values for the `s` secret values.
+
+[^1]: Original Paper: https://link.springer.com/article/10.1007/BF02351717
+
+[^2]: I have a previous post on the [size of cryptographic primes](/blog/how-big-are-cryptographic-primes) if you're curious how large these numbers might be in practice.
