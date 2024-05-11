@@ -105,12 +105,12 @@ $$
 
 From here we'll remove the `mod` operator for clarity.
 
-2. By the definition of `x` we can replace squared `r` terms:
+2. By the definition of `x` we can replace the squared `r` term like so:
 $$
 r^2 * (({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_3}^{a_3}) )^2 = x * (({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_3}^{a_3}))^2
 $$
 
-3. If we expand the squared terms, we get
+3. If we expand the squared terms to the right of `x`, we get
 $$
 x * (({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_3}^{a_3}))^2 = x * ({s_1}^{a_1}) * ({s_1}^{a_1}) * ({s_2}^{a_2}) * ({s_2}^{a_2}) * ({s_3}^{a_3}) * ({s_3}^{a_3})
 $$
@@ -122,7 +122,7 @@ $$
 
 Thus returning us to the proof statement (and with the `mod` operator re-applied):
 $$
-mod(y^2, n) = mod(x * (({v_1}^{a_1}) * ({v_2}^{a_2}) * ({v_3}^{a_3})), n)
+mod(x * (({v_1}^{a_1}) * ({v_2}^{a_2}) * ({v_3}^{a_3})), n) = mod(y^2, n)
 $$
 
 These steps confirm that Peggy indeed knows the secret `s` values and can prove it without needing to directly reveal those values.
