@@ -1,5 +1,11 @@
 const ExternalWorkData = [
   {
+    title: 'A New Model for International, Privacy-Preserving Data Science',
+    description: `A presentation I gave at the PEPR 2024 conference on a project to enable privacy-preserving data science between national statistical organizations.`,
+    imgSrc: '/static/images/pepr-2024-talk-title-slide.png',
+    href: 'https://www.youtube.com/watch?v=69_RGhIJwMU',
+  },
+  {
     title: 'Awesome PETs',
     description: `A curated list of resources for privacy-enhancing technologies`,
     imgSrc: '/static/images/awesome-PETs.png',
