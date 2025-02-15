@@ -1,5 +1,19 @@
 const ExternalWorkData = [
   {
+    title:
+      'Responsible Artificial Intelligence (RAI) in U.S. Federal Government : Principles, Policies, and Practices',
+    description: `A paper presented at the 2nd Workshop on Regulatable ML at NeurIPS 2024, covering different approaches to RAI that meet the requirements of various executive orders, policies, and frameworks, as well as a presentation on the AI Toolkit developed by the xD team`,
+    imgSrc: '/static/images/rai-paper-abstract.png',
+    href: 'https://arxiv.org/abs/2502.03470',
+  },
+  {
+    title:
+      'A New Model for International Privacy Preserving Data Sharing Across National Statistical Organizations',
+    description: `A Census Bureau working paper highlighting work done in conjunction with the United Nations PET Lab, Statistics Canada, the Italian National Institute of Statistics, and OpenMined`,
+    imgSrc: '/static/images/census-working-paper-abstract.png',
+    href: 'https://www.census.gov/library/working-papers/2024/comm/mitchell-et-al.html',
+  },
+  {
     title: 'A New Model for International, Privacy-Preserving Data Science',
     description: `A presentation I gave at the PEPR 2024 conference on a project to enable privacy-preserving data science between national statistical organizations.`,
     imgSrc: '/static/images/pepr-2024-talk-title-slide.png',
@@ -24,22 +38,10 @@ const ExternalWorkData = [
     href: 'https://bias.xd.gov/resources/model-card-generator/',
   },
   {
-    title: 'Announcing the 2023 xD Emerging Technology Fellows',
-    description: `This is a news piece on the xD website presenting my cohort of emerging technology fellows.`,
-    imgSrc: '/static/images/announcing-the-2023-xd-emerging-technology-fellows.png',
-    href: 'https://www.xd.gov/news/announcing-2023-xd-emerging-technology-fellows/',
-  },
-  {
     title: 'How to audit an AI model owned by someone else (part 1)',
     description: `I was a coauthor on a tutorial detailing how to remotely audit AI models using OpenMined's library Syft.`,
     imgSrc: '/static/images/openmined-audit-diagram.png',
     href: 'https://blog.openmined.org/ai-audit-part-1/',
-  },
-  {
-    title: 'Hack Days at Mode',
-    description: `I wrote a piece for Mode's engineering blog on the company's hackathons.`,
-    imgSrc: '/static/images/mode-hack-days.png',
-    href: 'https://medium.com/mode-engineering/hack-days-at-mode-749a232901e2',
   },
   {
     title: 'd3.js Meetup Talk: A Pseudorandom Walkthrough of d3-random',
