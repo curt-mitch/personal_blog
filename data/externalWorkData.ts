@@ -1,5 +1,11 @@
 const ExternalWorkData = [
   {
+    title: 'Developing Metrics for Privacy Preserving FL',
+    description: `A presentation at Flower's 2025 AI Summit describing work with NIST to develop standards for privacy-preserving federated learning, with a focus on genomics data`,
+    imgSrc: '/static/images/flwr-summit-title-slide.png',
+    href: 'https://www.youtube.com/watch?v=PB4SqckFfyo',
+  },
+  {
     title:
       'Responsible Artificial Intelligence (RAI) in U.S. Federal Government : Principles, Policies, and Practices',
     description: `A paper presented at the 2nd Workshop on Regulatable ML at NeurIPS 2024, covering different approaches to RAI that meet the requirements of various executive orders, policies, and frameworks, as well as a presentation on the AI Toolkit developed by the xD team`,
