@@ -1,0 +1,39 @@
+---
+title: 'How to Ask for Help in Open-Source Communities'
+date: '2025-5-26'
+tags: ['open source', 'debugging']
+draft: false
+summary: 'Effective strategies for seeking help with open-source software'
+---
+As someone who's been contributing to open-source software (OSS) projects periodically for over 5 years, I love to see OSS projects and communities with lots of users and frequent interactions. In addition to collaborating on Github or Gitlab, many of these communities make use of other platforms for easier communication, frequently Slack or Discord, which often include a channel for Q&A or helping users debug issues with the open-source software they're using.
+
+I've noticed some recurring patterns in the ways people ask for help in these channels, and in this post I'll share some suggestions to both get the most help on your questions and also increase the chances that you'll solve the issue on your own. Going through these steps has the added benefit of improving your software development and debugging skills!
+
+## 1. Share the text of the error message rather than a screenshot
+A common type of help post I see is someone writing a brief message that lacks details on the problem they're experiencing, and the post commonly includes a screenshot of the error message and/or stacktrace[^1]. What is more helpful than a screenshot is a copy/paste of the text of the error message and stacktrace. This makes it easier for the OSS maintainers to read the error text and allows them to copy/paste the text to perform their own web searches, or search the OSS codebase for the error messages and names of functions in the stack trace.
+
+## 2. Provide details on your environment
+Along with including the text of error messages, it's often beneficial to describe the environment you're trying to run the OSS in. At a minimum, you should include the following information:
+* The hardware (type of personal computer or server), operating system, and operating system version number
+* The release or version number of the OSS you're using and seeking help with
+* Details on any virtual environment, package manager, etc., being used (for example, maybe the person seeking help is using Anaconda for Python development, or running experiments within a Jupyter notebook)
+It can also be useful to describe what you're trying to do with the OSS, such as install it, use it within a larger program, etc.
+
+## 3. Describe what you've tried so far
+Lastly, you'll be more likely to get help if you can describe what you've tried so far to fix the issue. When interacting with senior colleagues in a professional setting, "What have you tried so far?" is often the first reponse you'll hear when you ask them for help to debug an issue. It can be useful if you describe what you've attempted to resolve the problem on your own, including:
+* What have you searched for online via Google or other search engines
+* Exchanges you've had with AI/LLM systems to debug the issue
+* Attempts to rerun a command or process with different arguments, configurations, etc.
+
+The great thing about detailing what you've tried is that it can frequently help you fix the problem on your own. This will especially be the case as you gain more experience. In my own career I can recall several times when I was stuck on an issue, and as I began writing a message into Slack or Discord to ask for help I uncovered additional approaches to solving the problem that I hadn't tried yet. Frequently one of these new approaches would help me fix the issue![^2]
+
+## Helping OSS Devs and Yourself
+To summarize, when you create a post asking OSS maintainers or the broader community for help, include the following information:
+1. the text of the error message and stacktrace (rather than a screenshot)
+2. the details of your environment and how you're using the OSS
+3. a brief description of what you've tried so far to resolve the issue
+
+Using the above tactics will help get you unstuck faster. You'll also be helping the OSS community more effectively find and fix bugs, and by using this process you'll be improving your own debugging skills to become a more effective software professional!
+
+[^1]: A stacktrace is the list of messages a program will display when an error or failure occurs. It consists of several function calls (that's the "stack" part of the term) meant to help developers "trace" a problem to its source.
+[^2]: See "Rubber Duck Debugging" for a more thorough, detailed description of this method: https://rubberduckdebugging.com/.
