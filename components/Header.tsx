@@ -4,7 +4,6 @@ import Logo from '@/data/fibonacci-logo.svg'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
-import SearchButton from './SearchButton'
 import { getTheme } from '@/utils/theme'
 
 const Header = () => {
@@ -40,7 +39,6 @@ const Header = () => {
               {link.title}
             </Link>
           ))}
-        <SearchButton />
         <ThemeSwitch theme={theme} />
         <MobileNav />
       </div>

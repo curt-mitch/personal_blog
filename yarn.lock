@@ -7003,13 +7003,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"htmx.org@npm:^2.0.8":
-  version: 2.0.8
-  resolution: "htmx.org@npm:2.0.8"
-  checksum: 56f2dc6b1416a9fde05e351dfe5ca9cecee44f73b41f92776d812d80d7cd5c62cc96d191a13959b66012a2cbeefe3d945421f4fa75001e2f8905fd8a25164f69
-  languageName: node
-  linkType: hard
-
 "http-cache-semantics@npm:^4.1.1":
   version: 4.2.0
   resolution: "http-cache-semantics@npm:4.2.0"
@@ -11605,7 +11598,6 @@ __metadata:
     eslint-plugin-prettier: ^5.0.0
     github-slugger: ^1.4.0
     gray-matter: ^4.0.2
-    htmx.org: ^2.0.8
     husky: ^8.0.0
     image-size: 1.0.0
     lint-staged: ^13.0.0
