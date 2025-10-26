@@ -1,0 +1,33 @@
+---
+title: 'Building a Visual Intuition for Differential Privacy, Part 1'
+date: '2024-10-28'
+tags: ['differential privacy', 'privacy-enhancing technologies']
+draft: true
+summary: 'Teaching and Learning About Differential Privacy Through Visualizations'
+---
+
+When I started working professionally the field of privacy-enhancing technologies (PETs), it didn't take me long to realize that there is a real derth of material about these technologies that are made for beginners. That could be because PETs incorporate a range of concepts and techniques from other fields such as cryptography and probability, or it could be that most university courses and books I come across online that teach PETs often include them as a small section with material that's more broadly about privacy, security, data analysis, or machine learning.
+
+Even though PETs do indeed consist of ideas and processes from many disparate fields(1), there are many useful analogies and visualizations that can be employed to provide some intuition for how they work. In this post I'd like to show some visual intuitions for differential privacy, one of the more mature and widely-used privacy-enhancing technologies.
+
+## What is Differential Privacy?
+
+In short, differential privacy (DP) is a technique for extracting useful insight from data while providing just enough statistical noise in those values to maintain the privacy of entities within that data. Said in a slightly different way: differential privacy adds noise to data outputs that provide plausible deniability for data subjects.
+
+More formally, when someone requests an output value that describes a dataset (such as a count or average of a set of values in that dataset), DP adds or subtracts a random number from the output value such that sees this altered version of the output can no longer determine if a specific person or entity is in the dataset. We can visualize this by looking at two rows of a fake payroll dataset and the sum of the salary values from those rows.
+
+Original table:
+<ExampleDatabaseTable />
+
+table with row removed:
+<ExampleDatabaseTable removedRow={1}/>
+
+ Let's imagine a privacy attacker does not have access to these tables directly, but has access to the two different salary sum values. Clearly this person can determine the value of the missing salary by simply subtracting the sums:
+
+$$
+salary\_sum_1 - salary\_sum_2 = 254000 - 199000 = 55000
+$$
+
+* add random noise to output
+
+* what kind of random noise

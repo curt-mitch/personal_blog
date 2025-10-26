@@ -5,8 +5,11 @@ import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
+import { getTheme } from '@/utils/theme'
 
 const Header = () => {
+  const theme = getTheme()
+
   return (
     <header className="flex items-center justify-between py-10">
       <div>
@@ -38,7 +41,7 @@ const Header = () => {
             </Link>
           ))}
         <SearchButton />
-        <ThemeSwitch />
+        <ThemeSwitch theme={theme} />
         <MobileNav />
       </div>
     </header>

@@ -1,32 +1,16 @@
-'use client'
-
-import { useState } from 'react'
 import Link from './Link'
 import headerNavLinks from '@/data/headerNavLinks'
 
 const MobileNav = () => {
-  const [navShow, setNavShow] = useState(false)
-
-  const onToggleNav = () => {
-    setNavShow((status) => {
-      if (status) {
-        document.body.style.overflow = 'auto'
-      } else {
-        // Prevent scrolling
-        document.body.style.overflow = 'hidden'
-      }
-      return !status
-    })
-  }
-
   return (
     <>
-      <button aria-label="Toggle Menu" onClick={onToggleNav} className="sm:hidden">
+      <input type="checkbox" id="mobile-nav-toggle" className="peer hidden" />
+      <label htmlFor="mobile-nav-toggle" aria-label="Toggle Menu" className="sm:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className="text-gray-900 dark:text-gray-100 h-8 w-8"
+          className="text-gray-900 dark:text-gray-100 h-8 w-8 cursor-pointer"
         >
           <path
             fillRule="evenodd"
@@ -34,14 +18,14 @@ const MobileNav = () => {
             clipRule="evenodd"
           />
         </svg>
-      </button>
-      <div
-        className={`fixed left-0 top-0 z-10 h-full w-full transform opacity-95 dark:opacity-[0.98] bg-white duration-300 ease-in-out dark:bg-gray-950 ${
-          navShow ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
+      </label>
+      <div className="fixed left-0 top-0 z-10 h-full w-full transform translate-x-full opacity-95 dark:opacity-[0.98] bg-white duration-300 ease-in-out dark:bg-gray-950 peer-checked:translate-x-0">
         <div className="flex justify-end">
-          <button className="mr-8 mt-11 h-8 w-8" aria-label="Toggle Menu" onClick={onToggleNav}>
+          <label
+            htmlFor="mobile-nav-toggle"
+            className="mr-8 mt-11 h-8 w-8 cursor-pointer"
+            aria-label="Toggle Menu"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -54,7 +38,7 @@ const MobileNav = () => {
                 clipRule="evenodd"
               />
             </svg>
-          </button>
+          </label>
         </div>
         <nav className="fixed mt-8 h-full">
           {headerNavLinks.map((link) => (
@@ -62,7 +46,6 @@ const MobileNav = () => {
               <Link
                 href={link.href}
                 className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
-                onClick={onToggleNav}
               >
                 {link.title}
               </Link>
