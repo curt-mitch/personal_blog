@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import GithubSlugger from 'github-slugger';
+import siteMetadata from '../../data/siteMetadata.js';
+import '../styles/global.css';
+
+const slugger = new GithubSlugger();
+
+const MAX_DISPLAY = 5;
+
+// Get all blog posts and sort by date
+const allPosts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
+
+const sortedPosts = allPosts.sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+
+const posts = sortedPosts.slice(0, MAX_DISPLAY);
+
+function formatDate(date: string, locale: string = 'en-US') {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  return new Date(date).toLocaleDateString(locale, options);
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{siteMetadata.title}</title>
+    <meta name="description" content={siteMetadata.description} />
+  </head>
+  <body class="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
+    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+      <div class="space-y-2 pb-8 pt-6 md:space-y-5">
+        <h1 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+          Latest
+        </h1>
+        <p class="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          {siteMetadata.description}
+        </p>
+      </div>
+      <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+        {!posts.length && <p>No posts found.</p>}
+        {posts.map((post) => {
+          const { slug: postSlug, data } = post;
+          const { date, title, summary, tags } = data;
+          return (
+            <li class="py-12">
+              <article>
+                <div class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                  <dl>
+                    <dt class="sr-only">Published on</dt>
+                    <dd class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                      <time datetime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                    </dd>
+                  </dl>
+                  <div class="space-y-5 xl:col-span-3">
+                    <div class="space-y-6">
+                      <div>
+                        <h2 class="text-2xl font-bold leading-8 tracking-tight">
+                          <a
+                            href={`/blog/${postSlug}`}
+                            class="text-gray-900 dark:text-gray-100"
+                          >
+                            {title}
+                          </a>
+                        </h2>
+                        <div class="flex flex-wrap">
+                          {tags && tags.map((tag) => (
+                            <a
+                              href={`/tags/${slugger.slug(tag)}`}
+                              class="mr-3 text-sm font-medium uppercase text-primary-700 hover:text-primary-600 dark:hover:text-primary-400"
+                            >
+                              {tag.split(' ').join('-')}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                      <div class="prose max-w-none text-gray-500 dark:text-gray-400">
+                        {summary}
+                      </div>
+                    </div>
+                    <div class="text-base font-medium leading-6">
+                      <a
+                        href={`/blog/${postSlug}`}
+                        class="text-primary-800 hover:text-primary-600 dark:hover:text-primary-400"
+                        aria-label={`Read more: "${title}"`}
+                      >
+                        Read more &rarr;
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+    {sortedPosts.length > MAX_DISPLAY && (
+      <div class="flex justify-end text-base font-medium leading-6">
+        <a
+          href="/blog"
+          class="text-primary-800 hover:text-primary-600 dark:hover:text-primary-400"
+          aria-label="All posts"
+        >
+          All Posts &rarr;
+        </a>
+      </div>
+    )}
+  </body>
+</html>

@@ -11,6 +11,8 @@ module.exports = {
     './layouts/**/*.{js,ts,tsx}',
     './data/**/*.mdx',
     './lib/**/*.{js,ts}',
+    // Astro paths
+    './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
   ],
   darkMode: 'class',
   theme: {

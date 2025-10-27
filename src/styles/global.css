@@ -1,0 +1,8 @@
+/* Import Tailwind directives and custom styles */
+@import '../../css/tailwind.css';
+
+/* Import Prism syntax highlighting */
+@import '../../css/prism.css';
+
+/* Import KaTeX for math rendering */
+@import 'katex/dist/katex.css';
