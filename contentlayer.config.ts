@@ -11,7 +11,7 @@ import {
   remarkCodeTitles,
   remarkImgToJsx,
   extractTocHeadings,
-} from 'pliny/mdx-plugins/index.js'
+} from './lib/mdx-plugins/index'
 // Rehype packages
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
@@ -137,8 +137,11 @@ export default makeSource({
       rehypePresetMinify,
     ],
   },
-  onSuccess: async (importData) => {
-    const { allBlogs } = await importData()
-    createTagCount(allBlogs)
-  },
+  // onSuccess callback disabled due to Node.js 20 compatibility issues
+  // with contentlayer's generated 'assert' syntax.
+  // Tag data will be generated at build time instead.
+  // onSuccess: async (importData) => {
+  //   const { allBlogs } = await importData()
+  //   createTagCount(allBlogs)
+  // },
 })

@@ -1,4 +1,3 @@
-/** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
   title: 'A Marvelous Balance',
   author: 'Curtis Mitchell',

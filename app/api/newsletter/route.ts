@@ -1,9 +1,11 @@
-import { NewsletterAPI } from 'pliny/newsletter'
-import siteMetadata from '@/data/siteMetadata'
+// Newsletter API stub - returns 501 Not Implemented
+// Add actual newsletter provider integration when needed
+import { NextResponse } from 'next/server'
 
-const handler = NewsletterAPI({
-  // @ts-ignore
-  provider: siteMetadata.newsletter.provider,
-})
+export async function GET() {
+  return NextResponse.json({ error: 'Newsletter not configured' }, { status: 501 })
+}
 
-export { handler as GET, handler as POST }
+export async function POST() {
+  return NextResponse.json({ error: 'Newsletter not configured' }, { status: 501 })
+}
