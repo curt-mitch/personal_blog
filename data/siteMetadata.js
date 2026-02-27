@@ -13,6 +13,7 @@ const siteMetadata = {
   // mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'curtis@curt-mitch.com',
   github: 'https://github.com/curt-mitch',
+  gitlab: 'https://gitlab.com/curt-mitch',
   // twitter: 'https://twitter.com/',
   // facebook: 'https://facebook.com',
   // youtube: 'https://youtube.com',
